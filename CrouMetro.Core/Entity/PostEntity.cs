@@ -34,13 +34,13 @@ namespace CrouMetro.Core.Entity
 
         public long InReplyToUserID { private set; get; }
 
-        public long SpreadCount { private set; get; }
+        public long LikeCount { private set; get; }
 
-        public Boolean IsSpreaded { private set; get; }
+        public Boolean IsLiked { private set; get; }
 
-        public Boolean CanBeSpread { private set; get; }
+        public Boolean CanBeLiked { private set; get; }
 
-        public PostEntity SpreadStatus { private set; get; }
+        public PostEntity LikedStatus { private set; get; }
 
         public PostEntity ReplyStatus { private set; get; }
 
@@ -93,17 +93,17 @@ namespace CrouMetro.Core.Entity
                                                  ? "0"
                                                  : (String)o["in_reply_to_user_id"]),
                                          IsFavorited = Boolean.Parse((String)o["favorited"]),
-                                         IsSpreaded = Boolean.Parse((String)o["spread"]),
+                                         IsLiked = Boolean.Parse((String)o["spread"]),
                                          CanBeFavorited = !Boolean.Parse((String)o["favorited"]),
-                                         CanBeSpread = !Boolean.Parse((String)o["spread"]),
+                                         CanBeLiked = !Boolean.Parse((String)o["spread"]),
                                          ReplyStatus =
                                              (JObject)o["reply_status"] == null
                                                  ? null
                                                  : ParsePost((JObject)o["reply_status"], userAccountEntity),
                                          SourceName = (String)o["source"]["name"],
                                          SourceUrl = (String)o["source"]["url"],
-                                         SpreadCount = long.Parse((String)o["spread_count"]),
-                                         SpreadStatus =
+                                         LikeCount = long.Parse((String)o["spread_count"]),
+                                         LikedStatus =
                                              (JObject)o["spread_status"] == null
                                                  ? null
                                                  : ParsePost((JObject)o["spread_status"], userAccountEntity),
@@ -136,11 +136,11 @@ namespace CrouMetro.Core.Entity
                             post.HasMedia = true;
                         }
                     }
-                    if (post.SpreadStatus != null)
+                    if (post.LikedStatus != null)
                     {
-                        post.SpreadStatus.SpreadBy = string.Format("{0}さんがイイネ！しました。", post.User.Name);
-                        post.SpreadStatus.IsSpreaded = true;
-                        entity.Add(post.SpreadStatus);
+                        post.LikedStatus.SpreadBy = string.Format("{0}さんがイイネ！しました。", post.User.Name);
+                        post.LikedStatus.IsLiked = true;
+                        entity.Add(post.LikedStatus);
                     }
                     else
                     {
@@ -179,15 +179,15 @@ namespace CrouMetro.Core.Entity
                         ? "0"
                         : (String) o["in_reply_to_user_id"]),
                 IsFavorited = Boolean.Parse((String) o["favorited"]),
-                IsSpreaded = Boolean.Parse((String) o["spread"]),
+                IsLiked = Boolean.Parse((String) o["spread"]),
                 ReplyStatus =
                     (JObject) o["reply_status"] == null
                         ? null
                         : ParsePost((JObject) o["reply_status"], userAccountEntity),
                 SourceName = (String) o["source"]["name"],
                 SourceUrl = (String) o["source"]["url"],
-                SpreadCount = long.Parse((String) o["spread_count"]),
-                SpreadStatus =
+                LikeCount = long.Parse((String) o["spread_count"]),
+                LikedStatus =
                     (JObject) o["spread_status"] == null
                         ? null
                         : ParsePost((JObject) o["spread_status"], userAccountEntity),
@@ -280,13 +280,13 @@ namespace CrouMetro.Core.Entity
                 InReplyToStatusID = InReplyToStatusID,
                 InReplyToUserID = InReplyToUserID,
                 IsFavorited = IsFavorited,
-                IsSpreaded = IsSpreaded,
+                IsLiked = IsLiked,
                 Media = Media,
                 ReplyStatus = ReplyStatus,
                 SourceName = SourceName,
                 SourceUrl = SourceUrl,
-                SpreadCount = SpreadCount,
-                SpreadStatus = SpreadStatus,
+                LikeCount = LikeCount,
+                LikedStatus = LikedStatus,
                 StatusID = StatusID,
                 Post = Post,
                 User = User
